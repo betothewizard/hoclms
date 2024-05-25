@@ -5,7 +5,7 @@ import { Button } from "@headlessui/react";
 const question: string = "Các loại nguồn (hình thức) của pháp luật Việt Nam hiện nay là:";
 const answers: string[] = ['Học thuyết chính trị - pháp lý',
   'Hương ước',
-  'Văn bản pháp luật, tập quán, án lệ, lẽ công bằng, nguyên tắc pháp luật;',
+  'Văn bản pháp luật, tập quán, án lệ, lẽ công bằng, nguyên tắc pháp luật',
   `Điều lệ của các công ty`];
 
 
