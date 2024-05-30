@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Question } from "./Question.tsx";
 import { Button } from "@headlessui/react";
 
@@ -10,16 +9,16 @@ const answers: string[] = ['Học thuyết chính trị - pháp lý',
 
 
 export const Test = () => {
-  const [data, setData] = useState([]);
-  const [questionObject, setQuestionObject] = useState([]);
-  const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
-  const [showResult, setShowResult] = useState(false);
-
-  useEffect(() => {
-    fetch("").then(response => response.json()).then(jsonData => {
-      setData(jsonData.results);
-    })
-  }, []);
+  // const [data, setData] = useState([]);
+  // // const [questionObject, setQuestionObject] = useState([]);
+  // // const [numCorrectAnswers, setNumCorrectAnswers] = useState(0);
+  // // const [showResult, setShowResult] = useState(false);
+  //
+  // useEffect(() => {
+  //   fetch("").then(response => response.json()).then(jsonData => {
+  //     setData(jsonData.results);
+  //   })
+  // }, []);
 
 
 

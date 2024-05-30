@@ -11,9 +11,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.0.3",
-    "@supabase/supabase-js": "^2.43.2",
+    "lucide-react": "^0.379.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1",
     "realm-web": "^2.0.0"
   },
   "devDependencies": {
