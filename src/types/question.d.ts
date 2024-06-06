@@ -1,6 +1,5 @@
-export interface Question {
-  question: string,
-  correctAnswer: string,
-  allAnswers: string[],
-
+export interface QuestionType {
+  question: string;
+  answers: string[];
+  correctAnswer: string;
 }
