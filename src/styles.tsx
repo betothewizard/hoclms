@@ -11,3 +11,10 @@ export const styles = {
   marginX: "sm:mx-16 mx-6",
   marginY: "sm:my-16 my-6",
 };
+
+export const radio = {
+  selected: "bg-yellow-400/50 border-yellow-500/60",
+  unselected: "border-zinc-300 bg-zinc-200/20",
+  correct: "bg-green-400/50 border-green-500/60",
+  incorrect: "bg-red-400/50 border-red-500/60",
+}
