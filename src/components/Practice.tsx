@@ -104,6 +104,7 @@ export const Practice = () => {
           <CustomDialog
             showWarning={showWarning}
             setShowWarning={setShowWarning}
+            currentQuestionsLength={currentQuestions.length}
           />
         )}
         <div className="space-x-7 flex justify-center">
