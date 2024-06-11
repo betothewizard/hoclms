@@ -106,19 +106,19 @@ export const Practice = () => {
             setShowWarning={setShowWarning}
           />
         )}
-        <div className="space-x-5 flex justify-end">
-          <Button className={`border-2 border-black my-8 px-3 rounded-xl ${currentPage === 0 ? "opacity-0" : ""}`}
+        <div className="space-x-7 flex justify-center">
+          <Button className={`border-2 border-zinc-600 my-8 px-2 rounded-full data-[hover]:bg-gray-200/50 ${currentPage === 0 ? "opacity-0" : ""}`}
                   onClick={() => toCurrentPage(currentPage - 1)} disabled={currentPage === 0}>
             <ArrowLeft></ArrowLeft>
           </Button>
           <Button
-            className="my-8 border-2 border-yellow-600 bg-[#f7b136] px-8 py-2 text-lg rounded-xl font-bold hover:bg-[#f7b136]/90"
+            className="my-8 border border-[#ef8e1e]/50 bg-[#f7b136] text-white px-7 py-2 text-lg rounded-xl hover:bg-[#f7b136]/90"
             onClick={onCheckAnswer}
           >
             Kiểm tra
           </Button>
           <Button
-            className={`my-8 border-2 border-black px-3 text-lg rounded-xl ${currentPage === totalPages - 1 ? "opacity-0" : ""}`}
+            className={`my-8 border-2 border-zinc-600 px-2 rounded-full data-[hover]:bg-gray-200/50 ${currentPage === totalPages - 1 ? "opacity-0" : ""}`}
             onClick={() => toCurrentPage(currentPage + 1)} disabled={currentPage === totalPages - 1}>
             <ArrowRight></ArrowRight>
           </Button>

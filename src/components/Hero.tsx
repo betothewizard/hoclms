@@ -18,7 +18,7 @@ export const Hero = () => {
           </p>
           <Link
             to="/practice"
-            className="mt-8 bg-[#f7b136] px-10 py-2 text-lg rounded-xl text-gray-50 hover:bg-[#f7b136]/90"
+            className="mt-8 border border-[#ef8e1e]/50 bg-[#f7b136] px-10 py-2 text-lg rounded-xl text-gray-50 hover:bg-[#f7b136]/90"
           >
             Ôn tập
           </Link>
