@@ -28,7 +28,7 @@ export const CustomDialog = (props: DialogProps) => {
           className="relative"
         >
           <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-            <DialogPanel className="max-w-lg space-y-4 border rounded-xl bg-white p-12 flex flex-col items-center">
+            <DialogPanel className="max-w-lg space-y-4 border-2 border-yellow-200/70 rounded-xl bg-white p-12 flex flex-col items-center">
               <CircleAlert size={50}></CircleAlert>
               <Description className="text-lg">
                 Bạn cần làm tất cả các câu để nộp bài

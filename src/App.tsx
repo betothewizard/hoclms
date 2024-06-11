@@ -4,6 +4,7 @@ import { Hero } from "./components/Hero.tsx";
 import { Navbar } from "./components/Navbar.tsx";
 import { Route, Routes } from "react-router-dom";
 import { Practice } from "./components/Practice.tsx";
+import { NotFound } from "./components/NotFound.tsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Hero />}></Route>
         <Route path="practice" element={<Practice />}></Route>
+        <Route path="/*" element={<NotFound />}></Route>
       </Routes>
     </div>
   );
