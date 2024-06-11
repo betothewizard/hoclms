@@ -3,6 +3,7 @@ import { Menu, XIcon } from "lucide-react";
 import { Button } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 import { LINKS } from "../utils/config";
+import logo from "/logo.png";
 
 export const Navbar = () => {
   const [toggle, setToggle] = useState(false);
@@ -10,7 +11,7 @@ export const Navbar = () => {
   return (
     <nav className="w-full flex py-10 justify-between items-center">
       <NavLink to="/">
-        <img src="/public/logo.png" alt="hoclms" className="pt-2 w-[90px] " />
+        <img src={logo} alt="hoclms" className="pt-2 w-[90px] " />
       </NavLink>
       <ul className="font-bold hidden sm:flex list-none justify-end items-center flex-1 gap-5">
         <li>
