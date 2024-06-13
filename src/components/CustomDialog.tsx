@@ -7,9 +7,9 @@ import {
 import { CircleAlert } from "lucide-react";
 
 interface DialogProps {
-  showWarning: boolean,
-  setShowWarning: React.Dispatch<React.SetStateAction<boolean>>
-  currentQuestionsLength: number
+  showWarning: boolean;
+  setShowWarning: React.Dispatch<React.SetStateAction<boolean>>;
+  currentQuestionsLength: number;
 }
 export const CustomDialog = (props: DialogProps) => {
   return (
@@ -29,13 +29,14 @@ export const CustomDialog = (props: DialogProps) => {
           className="relative"
         >
           <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-            <DialogPanel className="max-w-md space-y-4 border-2 border-black rounded-xl bg-white p-10 flex flex-col items-center">
+            <DialogPanel className="flex max-w-md flex-col items-center space-y-4 rounded-xl border-2 border-black bg-white p-10">
               <CircleAlert size={50}></CircleAlert>
-              <Description className="text-lg text-center">
-                Bạn cần làm đủ {props.currentQuestionsLength} câu trên trang này để kiểm tra kết quả
+              <Description className="text-center text-lg">
+                Bạn cần làm đủ {props.currentQuestionsLength} câu trên trang này
+                để kiểm tra kết quả
               </Description>
               <button
-                className="mt-5 bg-[#f7b136] border border-[#ef8e1e]/50 px-6 py-2 text-md rounded-xl text-gray-50 hover:bg-[#f7b136]/90"
+                className="text-md mt-5 rounded-xl border border-[#ef8e1e]/50 bg-[#f7b136] px-6 py-2 text-gray-50 hover:bg-[#f7b136]/90"
                 onClick={() => props.setShowWarning(false)}
               >
                 Tiếp tục làm

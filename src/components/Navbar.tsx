@@ -9,11 +9,11 @@ export const Navbar = () => {
   const [toggle, setToggle] = useState(false);
 
   return (
-    <nav className="w-full flex py-10 justify-between items-center">
+    <nav className="flex w-full items-center justify-between py-10">
       <NavLink to="/">
-        <img src={logo} alt="hoclms" className="pt-2 w-[90px] " />
+        <img src={logo} alt="hoclms" className="w-[90px] pt-2" />
       </NavLink>
-      <ul className="font-bold hidden sm:flex list-none justify-end items-center flex-1 gap-5">
+      <ul className="hidden flex-1 list-none items-center justify-end gap-5 font-bold sm:flex">
         <li>
           <NavLink
             style={({ isActive, isTransitioning }) => {
@@ -47,16 +47,16 @@ export const Navbar = () => {
         </li>
       </ul>
 
-      <div className="sm:hidden flex justify-end items-center">
+      <div className="flex items-center justify-end sm:hidden">
         <Button onClick={() => setToggle((t) => !t)}>
           {toggle ? <XIcon /> : <Menu />}
         </Button>
         <div
           className={`${
             toggle ? "flex" : "hidden"
-          } absolute p-6 top-24 right-0 mx-4 my-2 min-w-[150px] border-2 bg-gradient-to-br from-zinc-200 to-zinc-100 rounded-xl`}
+          } absolute right-0 top-24 mx-4 my-2 min-w-[150px] rounded-xl border-2 bg-gradient-to-br from-zinc-200 to-zinc-100 p-6`}
         >
-          <ul className="font-bold flex flex-col list-none justify-end items-center flex-1 gap-5">
+          <ul className="flex flex-1 list-none flex-col items-center justify-end gap-5 font-bold">
             <li>
               <NavLink
                 style={({ isActive, isTransitioning }) => {

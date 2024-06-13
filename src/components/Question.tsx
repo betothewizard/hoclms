@@ -32,17 +32,13 @@ export const Question = (props: QuestionProps) => {
               console.log(props.questionType);
             }}
             disabled={props.showResult}
-            className={`group flex cursor-pointer rounded-xl border-2 py-2 px-2 my-3
-            text-black shadow-lg transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-black
-            ${
+            className={`group my-3 flex cursor-pointer rounded-xl border-2 px-2 py-2 text-black shadow-lg transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-black ${
               answer === props.questionType.selectedAnswer ? "font-medium" : ""
-            }
-            ${
+            } ${
               !props.showResult && answer === props.questionType.selectedAnswer
                 ? radio.selected
                 : ""
-            } 
-            ${
+            } ${
               props.showResult && answer === props.questionType.correctAnswer
                 ? radio.correct
                 : ""
@@ -52,8 +48,7 @@ export const Question = (props: QuestionProps) => {
               answer !== props.questionType.correctAnswer
                 ? radio.incorrect
                 : ""
-            }
-            `}
+            } `}
           >
             <div>{answer}</div>
           </Radio>
