@@ -29,7 +29,6 @@ export const Question = (props: QuestionProps) => {
             value={answer}
             onClick={() => {
               props.onAnswerSelected(props.questionType.id, answer);
-              console.log(props.questionType);
             }}
             disabled={props.showResult}
             className={`group my-3 flex cursor-pointer rounded-xl border-2 px-2 py-2 text-black shadow-lg transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-black ${

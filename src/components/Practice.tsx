@@ -8,10 +8,13 @@ import { CustomDialog } from "./CustomDialog";
 import { LINKS } from "../utils/config";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SkeletonLoader } from "./SkeletonLoader.tsx";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const QUESTIONS_PER_PAGE = 10;
 
 export const Practice = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [questionsData, setQuestionsData] = useState<any>([]);
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
@@ -33,6 +36,14 @@ export const Practice = () => {
     setCurrentPage(page);
     window.scrollTo(0, 0);
   };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const page = parseInt(searchParams.get("page") || "");
+    if (!isNaN(page) && page >= 0 && page < totalPages) {
+      toCurrentPage(page);
+    }
+  });
 
   useEffect(() => {
     setIsLoading(true);
@@ -116,7 +127,9 @@ export const Practice = () => {
         <div className="flex justify-center space-x-7">
           <Button
             className={`my-8 rounded-full border-2 border-zinc-600 px-2 data-[hover]:bg-gray-200/50 ${currentPage === 0 ? "opacity-0" : ""}`}
-            onClick={() => toCurrentPage(currentPage - 1)}
+            onClick={() => {
+              navigate(`?page=${currentPage - 1}`);
+            }}
             disabled={currentPage === 0}
           >
             <ArrowLeft></ArrowLeft>
@@ -129,7 +142,9 @@ export const Practice = () => {
           </Button>
           <Button
             className={`my-8 rounded-full border-2 border-zinc-600 px-2 data-[hover]:bg-gray-200/50 ${currentPage === totalPages - 1 ? "opacity-0" : ""}`}
-            onClick={() => toCurrentPage(currentPage + 1)}
+            onClick={() => {
+              navigate(`?page=${currentPage + 1}`);
+            }}
             disabled={currentPage === totalPages - 1}
           >
             <ArrowRight></ArrowRight>

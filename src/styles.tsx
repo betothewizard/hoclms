@@ -17,4 +17,4 @@ export const radio = {
   unselected: "border-zinc-300 bg-zinc-200/20",
   correct: "bg-green-400/50 border-green-500/60",
   incorrect: "bg-red-400/50 border-red-500/60",
-}
+};

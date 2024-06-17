@@ -8,7 +8,7 @@ import { NotFound } from "./components/NotFound.tsx";
 
 function App() {
   return (
-    <div className="bg-zinc-100 overflow-hidden w-full min-h-screen">
+    <div className="min-h-screen w-full overflow-hidden bg-zinc-100">
       <div className={`${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
           <Navbar />
@@ -18,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Hero />}></Route>
         <Route path="practice" element={<Practice />}></Route>
+
         <Route path="/*" element={<NotFound />}></Route>
       </Routes>
     </div>
