@@ -1,18 +1,18 @@
-import { styles } from "../styles";
+import { styles } from "../../styles.tsx";
 import { useEffect, useState } from "react";
-import { QuestionType } from "../types/question";
-import { shuffle } from "../utils/random";
-import { Question } from "./Question";
+import { QuestionType } from "../../types/question";
+import { Question } from "../../components/question-ui.tsx";
 import { Button } from "@headlessui/react";
-import { CustomDialog } from "./CustomDialog";
-import { LINKS } from "../utils/config";
+import { CustomDialog } from "../../components/custom-dialog.tsx";
+import { LINKS } from "../../utils/config.ts";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { SkeletonLoader } from "./SkeletonLoader.tsx";
+import { SkeletonLoader } from "../../components/skeleton.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import { shuffle } from "../../utils/random.ts";
 
 const QUESTIONS_PER_PAGE = 10;
 
-export const Practice = () => {
+const PracticePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
@@ -52,11 +52,19 @@ export const Practice = () => {
         id: id,
         question: questionData.question,
         answers: shuffle([
-          ...questionData.incorrect_answers,
-          questionData.correct_answer,
+          {
+            id: 0,
+            content: questionData.correct_answer,
+          },
+          ...questionData.incorrect_answers.map(
+            (content: string, index: number) => ({
+              id: index + 1,
+              content: content,
+            }),
+          ),
         ]),
         correctAnswer: questionData.correct_answer,
-        selectedAnswer: "",
+        selectedAnswerIndex: undefined,
       }));
     };
 
@@ -83,14 +91,20 @@ export const Practice = () => {
     setIsLoading(false);
   }, []);
 
-  const onAnswerSelected = (questionIndex: number, answer: string) => {
-    questionsAndAnswers[questionIndex].selectedAnswer = answer;
-    setQuestionsAndAnswers(questionsAndAnswers);
+  const onAnswerSelected = (questionIndex: number, answerIndex: number) => {
+    setQuestionsAndAnswers((prevQuestions) => {
+      const updatedQuestions = [...prevQuestions];
+      updatedQuestions[questionIndex] = {
+        ...updatedQuestions[questionIndex],
+        selectedAnswerIndex: answerIndex,
+      };
+      return updatedQuestions;
+    });
   };
 
   const onCheckAnswer = () => {
     const notAllSelected = currentQuestions.some(
-      (element) => element.selectedAnswer === "",
+      (element) => element.selectedAnswerIndex === undefined,
     );
     setShowWarning(notAllSelected);
     if (!notAllSelected) {
@@ -154,3 +168,5 @@ export const Practice = () => {
     </div>
   );
 };
+
+export { PracticePage };

@@ -1,7 +1,7 @@
 export interface QuestionType {
   id: number;
   question: string;
-  answers: string[];
+  answers: { id: number; content: string }[];
   correctAnswer: string;
-  selectedAnswer: string;
+  selectedAnswerIndex: number | undefined;
 }

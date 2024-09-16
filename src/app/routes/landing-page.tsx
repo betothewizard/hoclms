@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { styles } from "../styles.tsx";
-import { LINKS } from "../utils/config.ts";
+import { styles } from "../../styles.tsx";
+import { LINKS } from "../../utils/config.ts";
 
-export const Hero = () => {
+const LandingPage = () => {
   return (
     <div className={`${styles.flexStart} ${styles.paddingY}`}>
       <div className={`${styles.boxWidth}`}>
@@ -38,3 +38,5 @@ export const Hero = () => {
     </div>
   );
 };
+
+export { LandingPage };

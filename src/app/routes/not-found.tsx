@@ -1,7 +1,7 @@
-import { styles } from "../styles.tsx";
+import { styles } from "../../styles.tsx";
 import { NavLink } from "react-router-dom";
 
-export const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <div className={`${styles.paddingX} ${styles.flexCenter} min-h-72`}>
       <div
@@ -15,3 +15,5 @@ export const NotFound = () => {
     </div>
   );
 };
+
+export { NotFoundPage };

@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { LINKS } from "../utils/config";
 import logo from "/logo.png";
 
-export const Navbar = () => {
+const Navbar = () => {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -94,3 +94,5 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+export { Navbar };
