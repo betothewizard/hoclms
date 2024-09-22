@@ -33,9 +33,7 @@ const Question = (props: QuestionProps) => {
           <Radio
             key={answer.id}
             value={answer.content}
-            onClick={() => {
-              onAnswerSelected(questionType.id, answerIndex);
-            }}
+            onClick={() => onAnswerSelected(questionType.id, answerIndex)}
             disabled={showResult}
             className={`group my-3 flex cursor-pointer rounded-xl border-2 px-2 py-2 text-black shadow-lg transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-black ${
               answerIndex === questionType.selectedAnswerIndex

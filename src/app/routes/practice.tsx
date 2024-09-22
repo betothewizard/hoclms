@@ -4,106 +4,78 @@ import { QuestionType } from "../../types/question";
 import { Question } from "../../components/question-ui.tsx";
 import { Button } from "@headlessui/react";
 import { CustomDialog } from "../../components/custom-dialog.tsx";
-import { LINKS } from "../../utils/config.ts";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SkeletonLoader } from "../../components/skeleton.tsx";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useLoaderData, useNavigation } from "react-router-dom";
 import { shuffle } from "../../utils/random.ts";
+import { getQuestions } from "../../services/getQuestions.ts";
+import { postSubmission } from "../../services/postSubmission.ts";
 
 const QUESTIONS_PER_PAGE = 10;
 
+const loader = async ({ request }: any) => {
+  const url = new URL(request.url);
+  const currentPage = +(url.searchParams.get("page") || 0);
+  const questionData = await getQuestions(currentPage);
+  return { currentPage, questionData };
+};
+
+const getQuestionsAndAnswers = (
+  data: any[],
+  currentPage: number,
+): QuestionType[] => {
+  return data.map((questionData, id: number) => ({
+    id: currentPage * QUESTIONS_PER_PAGE + id,
+    question: questionData.question,
+    answers: shuffle([
+      {
+        id: 0,
+        content: questionData.correct_answer,
+      },
+      ...questionData.incorrect_answers.map(
+        (content: string, index: number) => ({
+          id: index + 1,
+          content: content,
+        }),
+      ),
+    ]),
+    correctAnswer: questionData.correct_answer,
+    selectedAnswerIndex: undefined,
+  }));
+};
+
 const PracticePage = () => {
-  const location = useLocation();
+  const navigation = useNavigation();
+  const { currentPage, questionData } = useLoaderData() as {
+    currentPage: number;
+    questionData: any;
+  };
+  const { questions, meta } = questionData;
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-  const [questionsData, setQuestionsData] = useState<any>([]);
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<
     QuestionType[]
   >([]);
   const [showResult, setShowResult] = useState<boolean[]>([]);
   const [showWarning, setShowWarning] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const totalQuestions = questionsAndAnswers.length;
-  const totalPages = Math.ceil(totalQuestions / QUESTIONS_PER_PAGE);
-  const startQuestionIndex =
-    (currentPage * QUESTIONS_PER_PAGE) % totalQuestions;
-  const endQuestionIndex = startQuestionIndex + QUESTIONS_PER_PAGE;
-  const currentQuestions = questionsAndAnswers.slice(
-    startQuestionIndex,
-    endQuestionIndex,
-  );
-  const toCurrentPage = (page: number) => {
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
+
+  useEffect(() => {
+    setQuestionsAndAnswers(getQuestionsAndAnswers(questions, currentPage));
+  }, [questions, currentPage]);
+
+  const handleNavigation = (newPage: number) => {
+    navigate(`/practice?page=${newPage}`);
   };
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const page = parseInt(searchParams.get("page") || "");
-    if (!isNaN(page) && page >= 0 && page < totalPages) {
-      toCurrentPage(page);
-    }
-  });
-
-  useEffect(() => {
-    setIsLoading(true);
-    const getQuestionsAndAnswers = (data: any[]): QuestionType[] => {
-      return data.map((questionData, id: number) => ({
-        id: id,
-        question: questionData.question,
-        answers: shuffle([
-          {
-            id: 0,
-            content: questionData.correct_answer,
-          },
-          ...questionData.incorrect_answers.map(
-            (content: string, index: number) => ({
-              id: index + 1,
-              content: content,
-            }),
-          ),
-        ]),
-        correctAnswer: questionData.correct_answer,
-        selectedAnswerIndex: undefined,
-      }));
-    };
-
-    const dataSession = sessionStorage.getItem("session");
-    let parsedData;
-
-    if (!dataSession) {
-      if (questionsData.length === 0) {
-        fetch(LINKS.questions)
-          .then((r) => r.json())
-          .then((data) => {
-            parsedData = data;
-            sessionStorage.setItem("session", JSON.stringify(data));
-            setQuestionsData(parsedData);
-            setQuestionsAndAnswers(getQuestionsAndAnswers(parsedData));
-          })
-          .catch((error) => console.error("Error:", error));
-      }
-    } else {
-      parsedData = JSON.parse(dataSession);
-      setQuestionsData(parsedData);
-      setQuestionsAndAnswers(getQuestionsAndAnswers(parsedData));
-    }
-    setIsLoading(false);
-  }, []);
-
-  const onAnswerSelected = (questionIndex: number, answerIndex: number) => {
+  const onAnswerSelected = (questionId: number, answerIndex: number) => {
     setQuestionsAndAnswers((prevQuestions) => {
-      const updatedQuestions = [...prevQuestions];
-      updatedQuestions[questionIndex] = {
-        ...updatedQuestions[questionIndex],
-        selectedAnswerIndex: answerIndex,
-      };
-      return updatedQuestions;
+      return prevQuestions.map((q) =>
+        q.id === questionId ? { ...q, selectedAnswerIndex: answerIndex } : q,
+      );
     });
   };
 
-  const onCheckAnswer = () => {
-    const notAllSelected = currentQuestions.some(
+  const onCheckAnswer = async () => {
+    const notAllSelected = questionsAndAnswers.some(
       (element) => element.selectedAnswerIndex === undefined,
     );
     setShowWarning(notAllSelected);
@@ -113,17 +85,28 @@ const PracticePage = () => {
         newResult[currentPage] = true;
         return newResult;
       });
+
+      const submission = questionsAndAnswers.map((question) => ({
+        id: question.id,
+        selectedAnswerIndex: question.selectedAnswerIndex!,
+      }));
+
+      try {
+        await postSubmission(submission);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   return (
     <div className={`${styles.paddingX} ${styles.flexCenter}`}>
       <div className={`${styles.boxWidth}`}>
-        {isLoading
+        {navigation.state === "loading"
           ? [...Array(QUESTIONS_PER_PAGE)].map((_, i) => (
               <SkeletonLoader key={i} />
             ))
-          : currentQuestions.map((question, index) => (
+          : questionsAndAnswers.map((question, index) => (
               <Question
                 key={index}
                 questionType={question}
@@ -135,15 +118,13 @@ const PracticePage = () => {
           <CustomDialog
             showWarning={showWarning}
             setShowWarning={setShowWarning}
-            currentQuestionsLength={currentQuestions.length}
+            currentQuestionsLength={questionsAndAnswers.length}
           />
         )}
-        <div className="flex justify-center space-x-7">
+        <div className="flex justify-center space-x-4">
           <Button
             className={`my-8 rounded-full border-2 border-zinc-600 px-2 data-[hover]:bg-gray-200/50 ${currentPage === 0 ? "opacity-0" : ""}`}
-            onClick={() => {
-              navigate(`?page=${currentPage - 1}`);
-            }}
+            onClick={() => handleNavigation(currentPage - 1)}
             disabled={currentPage === 0}
           >
             <ArrowLeft></ArrowLeft>
@@ -155,11 +136,9 @@ const PracticePage = () => {
             Kiểm tra
           </Button>
           <Button
-            className={`my-8 rounded-full border-2 border-zinc-600 px-2 data-[hover]:bg-gray-200/50 ${currentPage === totalPages - 1 ? "opacity-0" : ""}`}
-            onClick={() => {
-              navigate(`?page=${currentPage + 1}`);
-            }}
-            disabled={currentPage === totalPages - 1}
+            className={`my-8 rounded-full border-2 border-zinc-600 px-2 data-[hover]:bg-gray-200/50 ${currentPage === meta.totalPages - 1 ? "opacity-0" : ""}`}
+            onClick={() => handleNavigation(currentPage + 1)}
+            disabled={currentPage === meta.totalPages - 1}
           >
             <ArrowRight></ArrowRight>
           </Button>
@@ -169,4 +148,4 @@ const PracticePage = () => {
   );
 };
 
-export { PracticePage };
+export { PracticePage, loader };

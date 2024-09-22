@@ -16,8 +16,10 @@ const AppRouter = () => {
         {
           path: "/practice",
           lazy: async () => {
-            const { PracticePage } = await import("./routes/practice.tsx");
-            return { element: <PracticePage /> };
+            const { PracticePage, loader } = await import(
+              "./routes/practice.tsx"
+            );
+            return { element: <PracticePage />, loader: loader };
           },
         },
         {

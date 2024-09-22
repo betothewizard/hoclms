@@ -4,7 +4,9 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-y: scroll;
 }
+
 body {
   font-family: system-ui, sans-serif;
 }

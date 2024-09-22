@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import { Navbar } from "../components/navbar";
 import { styles } from "../styles";
 
@@ -11,6 +11,7 @@ const AppLayout = () => {
         </div>
       </div>
       <Outlet />
+      <ScrollRestoration />
     </div>
   );
 };
