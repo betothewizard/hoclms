@@ -1,10 +1,9 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "../utils/query-client";
 
 type AppProviderProps = {
   children: React.ReactNode;
 };
-
-const queryClient = new QueryClient();
 
 const AppProvider = ({ children }: AppProviderProps) => {
   return (

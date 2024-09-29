@@ -88,7 +88,7 @@ const PracticePage = () => {
 
       const submission = questionsAndAnswers.map((question) => ({
         id: question.id,
-        selectedAnswerIndex: question.selectedAnswerIndex!,
+        selectedAnswerIndex: question.answers[question.selectedAnswerIndex!].id,
       }));
 
       try {
@@ -104,16 +104,16 @@ const PracticePage = () => {
       <div className={`${styles.boxWidth}`}>
         {navigation.state === "loading"
           ? [...Array(QUESTIONS_PER_PAGE)].map((_, i) => (
-              <SkeletonLoader key={i} />
-            ))
+            <SkeletonLoader key={i} />
+          ))
           : questionsAndAnswers.map((question, index) => (
-              <Question
-                key={index}
-                questionType={question}
-                onAnswerSelected={onAnswerSelected}
-                showResult={showResult[currentPage]}
-              />
-            ))}
+            <Question
+              key={index}
+              questionType={question}
+              onAnswerSelected={onAnswerSelected}
+              showResult={showResult[currentPage]}
+            />
+          ))}
         {showWarning && (
           <CustomDialog
             showWarning={showWarning}
