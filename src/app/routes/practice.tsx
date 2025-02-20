@@ -5,15 +5,18 @@ import { Question } from "../../components/question-ui.tsx";
 import { Button } from "@headlessui/react";
 import { CustomDialog } from "../../components/custom-dialog.tsx";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { SkeletonLoader } from "../../components/skeleton.tsx";
-import { useNavigate, useLoaderData, useNavigation } from "react-router-dom";
+import {
+  useNavigate,
+  useLoaderData,
+  LoaderFunctionArgs,
+} from "react-router-dom";
 import { shuffle } from "../../utils/random.ts";
 import { getQuestions } from "../../services/getQuestions.ts";
 import { postSubmission } from "../../services/postSubmission.ts";
 
 const QUESTIONS_PER_PAGE = 10;
 
-const loader = async ({ request }: any) => {
+const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const currentPage = +(url.searchParams.get("page") || 0);
   const questionData = await getQuestions(currentPage);
@@ -45,7 +48,6 @@ const getQuestionsAndAnswers = (
 };
 
 const PracticePage = () => {
-  const navigation = useNavigation();
   const { currentPage, questionData } = useLoaderData() as {
     currentPage: number;
     questionData: any;
@@ -102,18 +104,14 @@ const PracticePage = () => {
   return (
     <div className={`${styles.paddingX} ${styles.flexCenter}`}>
       <div className={`${styles.boxWidth}`}>
-        {navigation.state === "loading"
-          ? [...Array(QUESTIONS_PER_PAGE)].map((_, i) => (
-            <SkeletonLoader key={i} />
-          ))
-          : questionsAndAnswers.map((question, index) => (
-            <Question
-              key={index}
-              questionType={question}
-              onAnswerSelected={onAnswerSelected}
-              showResult={showResult[currentPage]}
-            />
-          ))}
+        {questionsAndAnswers.map((question, index) => (
+          <Question
+            key={index}
+            questionType={question}
+            onAnswerSelected={onAnswerSelected}
+            showResult={showResult[currentPage]}
+          />
+        ))}
         {showWarning && (
           <CustomDialog
             showWarning={showWarning}

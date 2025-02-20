@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { styles } from "../../styles.tsx";
-import { LINKS } from "../../utils/config.ts";
 
 const LandingPage = () => {
   return (
@@ -17,21 +16,13 @@ const LandingPage = () => {
             Ôn tập môn học <b>Nhà nước và pháp luật đại cương</b> với hơn{" "}
             <b>100</b> câu hỏi ôn tập
           </p>
-          <div className="mt-10 flex flex-col items-center space-y-5">
+          <div className="mt-10 flex flex-col items-center">
             <Link
               to="/practice"
               className="rounded-xl border border-[#ef8e1e]/50 bg-[#f7b136] px-10 py-2 text-lg text-gray-50 hover:bg-[#f7b136]/90"
             >
               Ôn tập
             </Link>
-            <iframe
-              src={LINKS.githubButton}
-              frameBorder="0"
-              scrolling="0"
-              width="110"
-              height="30"
-              title="GitHub"
-            ></iframe>
           </div>
         </div>
       </div>
