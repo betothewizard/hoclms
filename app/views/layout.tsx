@@ -17,8 +17,10 @@ export default function AppLayout() {
         </div>
       </div>
       <Outlet />
-      <div className="backlink-wrapper">
-        <script src="https://cdn.indieboosting.com/latest/script.js?id=OLWTNFE0I3"></script>
+      <div className="w-full flex justify-center">
+        <div className="w-3/4">
+          <script src="https://cdn.indieboosting.com/latest/script.js?id=OLWTNFE0I3&direction=horizontal&theme=light&noBorder=true"></script>
+        </div>
       </div>
     </div>
   );
