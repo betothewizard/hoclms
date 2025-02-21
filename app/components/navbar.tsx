@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ExternalLink, Menu, XIcon } from "lucide-react";
 import { Button } from "@headlessui/react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import { LINKS } from "../utils/config";
 import logo from "/logo.png";
 

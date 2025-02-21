@@ -35,7 +35,7 @@ const Question = (props: QuestionProps) => {
             value={answer.content}
             onClick={() => onAnswerSelected(questionType.id, answerIndex)}
             disabled={showResult}
-            className={`group my-3 flex cursor-pointer rounded-xl border-2 px-2 py-2 text-black shadow-lg transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-black ${
+            className={`group my-3 flex cursor-pointer rounded-xl border-2 border-gray-200 px-2 py-2 text-black shadow-lg transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-black ${
               answerIndex === questionType.selectedAnswerIndex
                 ? "font-medium"
                 : ""

@@ -1,4 +1,4 @@
-import { ExportedHandler, KVNamespace } from "@cloudflare/workers-types";
+import type { ExportedHandler, KVNamespace } from "@cloudflare/workers-types";
 
 interface Env {
   hoclms: KVNamespace;

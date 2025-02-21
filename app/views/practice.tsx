@@ -1,27 +1,27 @@
-import { styles } from "../../styles.tsx";
+import { styles } from "../styles";
 import { useEffect, useState } from "react";
-import { QuestionType } from "../../types/question";
-import { Question } from "../../components/question-ui.tsx";
+import type { QuestionType } from "../types/question";
+import { Question } from "../components/question-ui";
 import { Button } from "@headlessui/react";
-import { CustomDialog } from "../../components/custom-dialog.tsx";
+import { CustomDialog } from "../components/custom-dialog";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import {
   useNavigate,
   useLoaderData,
-  LoaderFunctionArgs,
-} from "react-router-dom";
-import { shuffle } from "../../utils/random.ts";
-import { getQuestions } from "../../services/getQuestions.ts";
-import { postSubmission } from "../../services/postSubmission.ts";
+} from "react-router";
+import { shuffle } from "../utils/random";
+import { getQuestions } from "../services/getQuestions";
+import { postSubmission } from "../services/postSubmission";
+import type { Route } from "./+types/practice";
 
 const QUESTIONS_PER_PAGE = 10;
 
-const loader = async ({ request }: LoaderFunctionArgs) => {
+export async function clientLoader({ request }: Route.ClientLoaderArgs) {
   const url = new URL(request.url);
   const currentPage = +(url.searchParams.get("page") || 0);
   const questionData = await getQuestions(currentPage);
   return { currentPage, questionData };
-};
+}
 
 const getQuestionsAndAnswers = (
   data: any[],
@@ -47,7 +47,7 @@ const getQuestionsAndAnswers = (
   }));
 };
 
-const PracticePage = () => {
+export default function PracticePage() {
   const { currentPage, questionData } = useLoaderData() as {
     currentPage: number;
     questionData: any;
@@ -144,6 +144,4 @@ const PracticePage = () => {
       </div>
     </div>
   );
-};
-
-export { PracticePage, loader };
+}

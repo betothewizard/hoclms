@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { styles } from "../../styles.tsx";
+import { Link } from "react-router";
+import { styles } from "../styles";
 
-const LandingPage = () => {
+export default function LandingPage() {
   return (
     <div className={`${styles.flexStart} ${styles.paddingY}`}>
       <div className={`${styles.boxWidth}`}>
@@ -28,6 +28,4 @@ const LandingPage = () => {
       </div>
     </div>
   );
-};
-
-export { LandingPage };
+}
